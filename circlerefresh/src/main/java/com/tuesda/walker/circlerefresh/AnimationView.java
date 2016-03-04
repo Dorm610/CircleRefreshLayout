@@ -296,6 +296,8 @@ public class AnimationView extends View {
     private boolean mIsStart = true;
     private boolean mIsRefreshing = true;
 
+    private boolean isQuickStop = false;
+
     private void drawRefreshing(Canvas canvas) {
         canvas.drawRect(0, 0, mWidth, mHeight, mBackPaint);
         int innerY = PULL_HEIGHT - PULL_DELTA / 2 - mRadius * 2;
@@ -322,11 +324,17 @@ public class AnimationView extends View {
 
         }
 
+        if (isQuickStop){
+            mIsRefreshing = false;
+            isQuickStop = false;
+        }
     }
 
     // stop refreshing
     public void setRefreshing(boolean isFresh) {
-        mIsRefreshing = isFresh;
+
+            mIsRefreshing = isFresh;
+            isQuickStop = true;
     }
 
     private void drawDone(Canvas canvas) {
